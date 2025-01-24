@@ -8,12 +8,8 @@ import { z } from "zod"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { formSchema } from '@/lib/auth-schema'
  
-const formSchema = z.object({
-  name: z.string().min(2).max(50),
-  email: z.string().min(2).max(50),
-  password: z.string().min(2).max(50),
-})
 
 export default function SignUp() {
     // 1. Define your form.
@@ -81,7 +77,7 @@ export default function SignUp() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button className='w-full' type="submit">Submit</Button>
       </form>
     </Form>
   </CardContent>
