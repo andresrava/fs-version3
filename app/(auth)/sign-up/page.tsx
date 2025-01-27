@@ -42,7 +42,15 @@ export default function SignUp() {
         form.reset();
       }, 
       onError: (ctx) => { 
-        alert(ctx.error.message); 
+        toast({
+          title: "Error",
+          description: ctx.error.message,
+          variant: "destructive",
+        });
+        form.setError('email', {
+          type: 'manual',
+          message: ctx.error.message
+        })
       }, 
     });
     // Do something with the form values.
