@@ -9,6 +9,8 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { formSchema } from '@/lib/auth-schema'
+import { authClient } from '@/lib/auth-client'
+import { toast } from '@/hooks/use-toast'
  
 
 export default function SignUp() {
@@ -23,10 +25,28 @@ export default function SignUp() {
   })
  
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const { name, email, password } = values;
+    const { data, error } = await authClient.signUp.email({
+      email,
+      password,
+      name,
+      callbackURL: "/sign-in",
+    }, { 
+      onRequest: () => {         
+        toast({
+        title: "Plase wait...",
+      })
+      }, 
+      onSuccess: () => { 
+        form.reset();
+      }, 
+      onError: (ctx) => { 
+        alert(ctx.error.message); 
+      }, 
+    });
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
   }
   return (
     <div>

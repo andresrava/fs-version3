@@ -8,7 +8,9 @@ import { z } from "zod"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { signInFormSchema } from '@/lib/auth-schema'
+import { formSchema, signInFormSchema } from '@/lib/auth-schema'
+import { authClient } from '@/lib/auth-client'
+import { toast } from '@/hooks/use-toast'
  
 export default function SignIn() {
     // 1. Define your form.
@@ -21,10 +23,27 @@ export default function SignIn() {
   })
  
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof signInFormSchema>) {
+  async function onSubmit(values: z.infer<typeof signInFormSchema>) {
+    const { email, password } = values;
+    const { data, error } = await authClient.signIn.email({
+      email,
+      password,
+      callbackURL: "/dashboard",
+    }, { 
+      onRequest: () => {         
+        toast({
+        title: "Plase wait...",
+      })
+      }, 
+      onSuccess: () => { 
+        form.reset();
+      }, 
+      onError: (ctx) => { 
+        alert(ctx.error.message); 
+      }, 
+    });
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
   }
   return (
     <div>
