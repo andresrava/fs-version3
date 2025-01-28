@@ -39,9 +39,11 @@ export default function SignUp() {
       })
       }, 
       onSuccess: async () => { 
+        const apiUrl = process.env.NEXT_PUBLIC_API_NEW_USER_URL!
+        console.log("la apiUrl es: ", apiUrl)
         try {
           // Hacer la solicitud POST a la API
-          const response = await fetch('https://2jn4t45vda.execute-api.sa-east-1.amazonaws.com/users', {
+          const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
