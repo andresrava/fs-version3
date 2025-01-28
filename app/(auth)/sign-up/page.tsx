@@ -38,7 +38,26 @@ export default function SignUp() {
         title: "Plase wait...",
       })
       }, 
-      onSuccess: () => { 
+      onSuccess: async () => { 
+        try {
+          // Hacer la solicitud POST a la API
+          const response = await fetch('https://2jn4t45vda.execute-api.sa-east-1.amazonaws.com/users', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({name: name, email: email})
+          });
+    
+          if (response.ok) {
+            alert('Usuario creado exitosamente');
+          } else {
+            alert('Error al crear el usuario');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert('Hubo un error al intentar crear el usuario');
+        }
         form.reset();
       }, 
       onError: (ctx) => { 
