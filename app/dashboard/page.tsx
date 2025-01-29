@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth"
 import { redirect } from "next/dist/server/api-utils";
 import { headers } from "next/headers"
+import Link from "next/link";
 
 export default async function DashboardPage() {
         const session = await auth.api.getSession({
@@ -19,6 +20,11 @@ export default async function DashboardPage() {
                 <li>Name: {user.name}</li>
                 <li>Email: {user.email}</li>
             </ul>
+            <Link href="/newAccount">
+                <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+                    Create a new Account
+                </button>
+            </Link>
         </div>
     )
 
