@@ -21,15 +21,21 @@ export default async function Navbar() {
         <div>
           {
             session ? (
-              <form action={async () => {
+              <div>
+                <Link href='/accounts' className={buttonVariants()}>
+                  Create new action
+                </Link>
+                <form action={async () => {
                 'use server'
                 await auth.api.signOut({
                   headers: await headers()
                 });
                 redirect('/')
-              }}>
-                <Button type='submit'>Sign Out</Button>
-              </form>
+                }}>
+                  <Button type='submit'>Sign Out</Button>
+                </form>
+              </div>
+              
             ) : <Link href="/sign-in" className={buttonVariants()}>
             Sign In
             </Link>

@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
+import { toast } from "@/hooks/use-toast";
 
 export default async function NewAccountPage() {
     // Obtener la sesión del usuario
@@ -51,12 +52,13 @@ export default async function NewAccountPage() {
                 const errorData = await response.json();
                 return { error: errorData.message || "Error al crear la cuenta" };
             }
-
-            return { success: "Cuenta creada exitosamente" };
+            return { success: "Cuenta creada exitosamente",
+             };
         } catch (error) {
             console.error('Error:', error);
             return { error: "Hubo un error al intentar crear la cuenta" };
         }
+        
     }
 
     return (
