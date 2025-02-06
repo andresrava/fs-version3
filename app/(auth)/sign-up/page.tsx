@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input'
 import { formSchema } from '@/lib/auth-schema'
 import { authClient } from '@/lib/auth-client'
 import { toast } from '@/hooks/use-toast'
- 
+import postUser from "./newUser" 
 
 export default function SignUp() {
     // 1. Define your form.
@@ -53,6 +53,7 @@ export default function SignUp() {
     
           if (response.ok) {
             alert('Usuario creado exitosamente');
+            postUser({name: name, email: email})
           } else {
             alert('Error al crear el usuario');
           }
